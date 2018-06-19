@@ -2,17 +2,14 @@ package com.max_plus.homedooropenplate.activity;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
-import android.app.Application;
 import android.app.Dialog;
 import android.content.ContentUris;
-import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
-import android.icu.text.LocaleDisplayNames;
 import android.net.Uri;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
@@ -49,10 +46,6 @@ import com.loopj.android.http.RequestParams;
 import com.max_plus.homedooropenplate.DetecterActivity;
 import com.max_plus.homedooropenplate.R;
 import com.max_plus.homedooropenplate.RegisterActivity;
-import com.max_plus.homedooropenplate.zxing.activity.CaptureActivity;
-//import com.yzq.zxinglibrary.android.CaptureActivity;
-//import com.yzq.zxinglibrary.bean.ZxingConfig;
-//import com.yzq.zxinglibrary.common.Constant;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -69,6 +62,10 @@ import io.agora.rtc.RtcEngine;
 import io.agora.rtc.video.VideoCanvas;
 
 import static com.max_plus.homedooropenplate.getUrlCode.URLRequest;
+
+//import com.yzq.zxinglibrary.android.CaptureActivity;
+//import com.yzq.zxinglibrary.bean.ZxingConfig;
+//import com.yzq.zxinglibrary.common.Constant;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     private static final int msgTime = 1;
