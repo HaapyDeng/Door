@@ -1,0 +1,36 @@
+<resources>
+    <string name="app_name">OpenDoorPlate</string>
+    <string name="open_door_face">人脸识别开门</string>
+    <string name="logo_string">迈普乐· 智慧宅邸</string>
+    <string name="version_ID">V1.0</string>
+    <string name="put_psd">输入密码</string>
+    <string name="put_open_psd">输入开门密码</string>
+    <string name="put_open_code">输入开门码</string>
+    <string name="login_in">登录</string>
+    <string name="psd_error">输入密码错误请重试</string>
+    <string name="auto_open">自助开门</string>
+    <string name="face_open">人脸识别开门</string>
+    <string name="call_open">呼叫开门</string>
+    <string name="put_in_door_no">输入房间号</string>
+    <string name="put_in_name">输入房主姓氏</string>
+    <string name="ok">确认</string>
+    <string name="setting">系统设置</string>
+    <string name="set_time">系统时间</string>
+    <string name="sys_y">系统日期</string>
+    <string name="sys_h">系统时间</string>
+    <string name="set_login_password">设置登录密码</string>
+    <string name="fix_login_password">修改登录密码</string>
+    <string name="fix_open_door_password">修改开门密码</string>
+    <string name="fix_open_door_choose">修改开门选项</string>
+    <string name="put_old_psd">输入旧密码</string>
+    <string name="put_new_psd">输入新密码</string>
+    <string name="put_new_psd_again">再次输入新密码</string>
+    <string name="set_open_password">设置开门密码</string>
+    <string name="set_open_choose">设置开门选项</string>
+    <string name="chip_open">芯片卡开门</string>
+    <string name="tsd_open">二维码开门</string>
+    <string name="psd_code_open">开门码开门</string>
+    <string name="psd_open">密码开门</string>
+    <string name="pl_put_in_door_no">房间号不能为空</string>
+    <string name="agora_app_id">ac289be3a59c4f7f92cfd616b04d201e</string>
+</resources>

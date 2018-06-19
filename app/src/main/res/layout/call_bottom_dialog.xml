@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="360dp"
+    android:background="#ffffff"
+    android:orientation="vertical"
+    android:paddingBottom="20dp"
+    android:paddingLeft="22.5dp"
+    android:paddingRight="22.5dp"
+    android:paddingTop="20dp">
+
+    <TextView
+        android:id="@+id/call_user"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:drawableLeft="@mipmap/ic_calluser"
+        android:drawablePadding="47dp"
+        android:gravity="center_vertical"
+        android:paddingLeft="33dp"
+        android:text="呼叫住户"
+        android:textColor="#ff666666"
+        android:textSize="27dp" />
+
+    <TextView
+        android:id="@+id/call_Property"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:drawableLeft="@mipmap/ic_callproperty"
+        android:drawablePadding="47dp"
+        android:gravity="center_vertical"
+        android:paddingLeft="33dp"
+        android:text="呼叫物管"
+        android:textColor="#ff666666"
+        android:textSize="27dp" />
+
+    <TextView
+        android:id="@+id/cancel2"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:drawableLeft="@mipmap/ic_cancel"
+        android:drawablePadding="47dp"
+        android:gravity="center_vertical"
+        android:paddingLeft="33dp"
+        android:text="取消操作"
+        android:textColor="#ff666666"
+        android:textSize="27dp" />
+</LinearLayout>

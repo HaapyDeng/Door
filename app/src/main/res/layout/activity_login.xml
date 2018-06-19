@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ffffffff"
+    android:orientation="vertical"
+    tools:context=".activity.LoginActivity">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="80dp"
+        android:src="@mipmap/logo" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="50dp" />
+
+    <EditText
+        android:inputType="number"
+        android:id="@+id/et_psd"
+        android:layout_width="328dp"
+        android:layout_height="48dp"
+        android:layout_gravity="center"
+        android:background="@drawable/text_shape"
+        android:digits="1234567890."
+        android:drawableLeft="@drawable/zhanwei"
+        android:drawablePadding="10dp"
+        android:gravity="center_vertical"
+        android:hint="@string/put_psd" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="30dp" />
+
+    <Button
+        android:id="@+id/bt_login"
+        android:layout_width="328dp"
+        android:layout_height="48dp"
+        android:layout_gravity="center"
+        android:background="@drawable/bt_shape"
+        android:text="@string/login_in"
+        android:textColor="#ffffff"
+        android:textSize="16dp" />
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="30dp" />
+    <Button
+        android:id="@+id/bt_facer"
+        android:layout_width="328dp"
+        android:layout_height="48dp"
+        android:layout_gravity="center"
+        android:background="@drawable/bt_shape"
+        android:text="注册人脸"
+        android:textColor="#ffffff"
+        android:textSize="16dp" />
+
+</android.support.v7.widget.LinearLayoutCompat>

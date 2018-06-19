@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/call_user_fragment"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center_horizontal"
+    android:orientation="vertical">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="20dp" />
+
+    <ImageView
+        android:id="@+id/back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="40dp"
+        android:background="@mipmap/ic_back"
+        android:clickable="true" />
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="20dp" />
+
+    <EditText
+        android:id="@+id/et_doorNum"
+        android:layout_width="246dp"
+        android:layout_height="36dp"
+        android:layout_gravity="center"
+        android:background="@drawable/text_shape"
+        android:gravity="center"
+        android:hint="@string/put_in_door_no"
+        android:inputType="number"
+        android:textColorHint="#999999" />
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="20dp" />
+
+    <Button
+        android:id="@+id/bt_ok"
+        android:layout_width="246dp"
+        android:layout_height="36dp"
+        android:layout_gravity="center"
+        android:background="@drawable/bt_shape"
+        android:text="@string/ok"
+        android:textColor="#ffffff"
+        android:textSize="20dp" />
+
+</LinearLayout>
