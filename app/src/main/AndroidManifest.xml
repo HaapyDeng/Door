@@ -52,7 +52,7 @@
     <uses-feature android:name="android.hardware.camera.flash" />
 
     <application
-        android:name="com.max_plus.homedooropenplate.Application"
+        android:name=".Application"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -226,15 +226,14 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.SetChooseOpenActivity"
-            android:screenOrientation="portrait">
-
-        </activity>
-        <activity
-            android:name="com.max_plus.homedooropenplate.DetecterActivity"
-            android:screenOrientation="landscape"></activity>
-        <activity
-            android:name="com.max_plus.homedooropenplate.RegisterActivity"
             android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".DetecterActivity"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".RegisterActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".activity.Capture2Activity"></activity>
     </application>
 
 </manifest>

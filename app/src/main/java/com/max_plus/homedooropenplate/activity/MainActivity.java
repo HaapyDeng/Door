@@ -346,7 +346,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 mCameraDialog.dismiss();
                 if (checkSelfPermission(Manifest.permission.RECORD_AUDIO, PERMISSION_REQ_ID_RECORD_AUDIO) && checkSelfPermission(Manifest.permission.CAMERA, PERMISSION_REQ_ID_CAMERA)) {
                     Intent intentt = new Intent(MainActivity.this,
-                            CaptureActivity.class);
+                            Capture2Activity.class);
                     startActivityForResult(intentt, 0);
                 }
 
