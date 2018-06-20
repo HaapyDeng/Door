@@ -778,12 +778,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 doTdcOpen(codee);
             }
 
-        } else if (requestCode == 1 && resultCode == RESULT_OK) {
-            Uri mPath = ((com.max_plus.homedooropenplate.Application) (MainActivity.this.getApplicationContext())).getCaptureImage();
-            String file = getPath(mPath);
-            Bitmap bmp = com.max_plus.homedooropenplate.Application.decodeImage(file);
-            startRegister(bmp, file);
+//        } else if (requestCode == 1 && resultCode == RESULT_OK) {
+//            Uri mPath = ((com.max_plus.homedooropenplate.Application) (MainActivity.this.getApplicationContext())).getCaptureImage();
+//            String file = getPath(mPath);
+//            Bitmap bmp = com.max_plus.homedooropenplate.Application.decodeImage(file);
+//            startRegister(bmp, file);
+//        }
         } else if (requestCode == 3) {
+            if (data == null) {
+                Toast.makeText(MainActivity.this, "未识别，请重新识别或选择其他开门方式", Toast.LENGTH_LONG).show();
+                return;
+            }
             int open = data.getIntExtra("open", 2);
             Log.d("open==>>>", "" + open);
             if (open == 1) {

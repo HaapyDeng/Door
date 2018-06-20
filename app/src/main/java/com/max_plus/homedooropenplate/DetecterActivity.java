@@ -175,7 +175,7 @@ public class DetecterActivity extends Activity implements OnCameraListener, View
                             mImageView.setImageAlpha(255);
                             mImageView.setImageBitmap(bmp);
                             try {
-                                sleep(3000);
+                                sleep(1000);
                             } catch (InterruptedException e) {
                                 e.printStackTrace();
                             }
@@ -204,7 +204,7 @@ public class DetecterActivity extends Activity implements OnCameraListener, View
                             }
                             mImageView.setImageBitmap(bmp);
                             try {
-                                sleep(3000);
+                                sleep(1000);
                             } catch (InterruptedException e) {
                                 e.printStackTrace();
                             }
@@ -310,6 +310,7 @@ public class DetecterActivity extends Activity implements OnCameraListener, View
         mCamera = Camera.open(mCameraID);
         try {
             Camera.Parameters parameters = mCamera.getParameters();
+            Log.d("parameters==>>>", mWidth + "--" + mHeight);
             parameters.setPreviewSize(mWidth, mHeight);
             parameters.setPreviewFormat(mFormat);
 

@@ -11,6 +11,8 @@ import com.max_plus.homedooropenplate.R;
 
 import java.util.List;
 
+import cn.jpush.android.api.JPushInterface;
+
 import static com.max_plus.homedooropenplate.GetPicturesPath.getImagePathFromSD;
 
 
@@ -22,6 +24,8 @@ public class StartActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start);
+        JPushInterface.setDebugMode(true);
+        JPushInterface.init(this);
         //获取sd卡相册所有图片路径
 //        list.addAll(getImagePathFromSD());
 //        for (String imagePath : list) {

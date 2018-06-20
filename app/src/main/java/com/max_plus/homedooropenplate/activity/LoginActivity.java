@@ -83,6 +83,10 @@ public class LoginActivity extends AppCompatActivity {
             Bitmap bmp = com.max_plus.homedooropenplate.Application.decodeImage(file);
             startRegister(bmp, file);
         } else if (requestCode == 4) {
+            if (data == null) {
+                Toast.makeText(this, "未识别，人脸注册失败", Toast.LENGTH_LONG).show();
+                return;
+            }
             int faceCode = data.getIntExtra("rface", 2);
             Log.d("faceCode==>>>", "" + faceCode);
             if (faceCode == 1) {
