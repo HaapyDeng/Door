@@ -36,4 +36,5 @@ dependencies {
     implementation files('libs/jpush-android-3.1.3.jar')
     implementation files('libs/genderestimation.jar')
     implementation project(path: ':zxinglite')
+    implementation files('libs/hurraylibs.jar')
 }

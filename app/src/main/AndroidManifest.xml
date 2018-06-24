@@ -205,13 +205,7 @@
         <activity
             android:name=".activity.LoginActivity"
             android:screenOrientation="portrait" />
-        <activity
-            android:name=".zxing.activity.CaptureActivity"
-            android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.Black.NoTitleBar" />
-        <activity
-            android:name=".zxing.activity.ResultActivity"
-            android:screenOrientation="portrait" />
+
         <activity
             android:name=".activity.SettingActivity"
             android:screenOrientation="portrait" />

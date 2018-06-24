@@ -17,6 +17,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
+import android.os.Looper;
 import android.os.Message;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
@@ -40,6 +41,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.hurray.plugins.serialport;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
@@ -92,6 +94,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private int userId = 100;
     private String allName;
     private int typeFlag = 0;
+    private String arg = "/dev/ttyS1,9600,N,1,8";
+    private int iRead = 0;
+    private String strRfid = "";
+    private Thread pthread = null;
+    private MyHandler myHandler = new MyHandler();
+    public serialport pSerialport = new serialport();
 
     //视频通话hander
     private final IRtcEngineEventHandler mRtcEventHandler = new IRtcEngineEventHandler() { // Tutorial Step 1
@@ -256,7 +264,113 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 //        bt_regist = mainFragment.findViewById(R.id.bt_regist);
 //        bt_regist.setOnClickListener(this);
+        //开启刷卡开门线程
+        initSerial();
 
+
+    }
+
+    private void initSerial() {
+
+        int iret = pSerialport.open(arg);
+        if (iret > 0) {
+            iRead = iret;
+            Log.d("打开串口成功", arg + "/" + iret);
+
+            runReadSerial(iRead);
+        } else {
+            Log.d("打开串口失败>>", "" + iret);
+        }
+    }
+
+    // 读取串口数据线程
+    public void runReadSerial(final int fd) {
+        Runnable run = new Runnable() {
+            public void run() {
+                while (true) {
+                    int r = pSerialport.select(fd, 1, 0);
+                    if (r == 1) {
+                        //测试 普通读串口数据
+                        byte[] buf = new byte[50];
+                        buf = pSerialport.read(fd, 100);
+                        String str = "";
+
+                        if (buf == null) break;
+
+                        if (buf.length <= 0) break;
+
+                        str = byte2HexString(buf);
+
+                        Log.v("debug", str);
+
+                        Message msgpwd = new Message();
+                        msgpwd.what = 1;
+                        Bundle data = new Bundle();
+                        data.putString("data", str);
+                        msgpwd.setData(data);
+                        myHandler.sendMessage(msgpwd);
+
+                    }
+                }
+                onThreadEnd();
+            }
+        };
+        pthread = new Thread(run);
+        pthread.start();
+    }
+
+    public class MyHandler extends Handler {
+        public MyHandler() {
+        }
+
+        public MyHandler(Looper L) {
+            super(L);
+        }
+
+        // 子类必须重写此方法,接受数据
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            String strData = "";
+            // 此处可以更新UI
+            switch (msg.what) {
+                case 1:
+                    strData = msg.getData().getString("data");
+
+                    strRfid += strData;
+//                    edittext_rfidoutput.setText(strRfid);
+                    Log.d("test", strRfid);
+
+            }
+
+        }
+    }
+
+    public void onThreadEnd() {
+        this.runOnUiThread(new Runnable() {
+            public void run() {
+                Log.d("", "监听串口线程结束");
+            }
+        });
+    }
+
+    /**
+     * byte[]转换成字符串
+     *
+     * @param b
+     * @return
+     */
+    public static String byte2HexString(byte[] b) {
+        StringBuffer sb = new StringBuffer();
+        int length = b.length;
+        for (int i = 0; i < b.length; i++) {
+            String stmp = Integer.toHexString(b[i] & 0xff);
+            if (stmp.length() == 1)
+                sb.append("0" + stmp);
+            else
+                sb.append(stmp);
+        }
+        return sb.toString();
     }
 
     private void startDetector(int camera) {
