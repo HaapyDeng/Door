@@ -41,6 +41,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.hurray.plugins.rkctrl;
 import com.hurray.plugins.serialport;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -100,6 +101,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private Thread pthread = null;
     private MyHandler myHandler = new MyHandler();
     public serialport pSerialport = new serialport();
+    private rkctrl m_rkctrl = new rkctrl();
 
     //视频通话hander
     private final IRtcEngineEventHandler mRtcEventHandler = new IRtcEngineEventHandler() { // Tutorial Step 1
@@ -228,10 +230,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if (a != null) {
             doSendLog(userId);
             userId = 100;
-            openSuccess = LayoutInflater.from(MainActivity.this).inflate(R.layout.open_door_success, null);
-            fl_replace.addView(openSuccess);
-            back_open = openSuccess.findViewById(R.id.back_open);
-            back_open.setOnClickListener(this);
+//            openSuccess = LayoutInflater.from(MainActivity.this).inflate(R.layout.open_door_success, null);
+//            fl_replace.addView(openSuccess);
+//            back_open = openSuccess.findViewById(R.id.back_open);
+//            back_open.setOnClickListener(this);
 //            new Thread(new Runnable() {
 //                @Override
 //                public void run() {
@@ -244,6 +246,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //                    }
 //                }
 //            }).start();
+            m_rkctrl.exec_io_cmd(6, 0);
+            Log.d("open", "关闭继电器控制电磁锁");
+            openSuccess = LayoutInflater.from(MainActivity.this).inflate(R.layout.open_door_success, null);
+            fl_replace.addView(openSuccess);
+            back_open = openSuccess.findViewById(R.id.back_open);
+            back_open.setOnClickListener(MainActivity.this);
+            Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    m_rkctrl.exec_io_cmd(6, 1);
+                    Log.d("close", "打开继电器控制电磁锁");
+
+                }
+            }, 3000);//3秒后执行
         }
         //显示时间
         tv_time_year = findViewById(R.id.tv_time_set);
@@ -300,9 +317,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         if (buf.length <= 0) break;
 
                         str = byte2HexString(buf);
-
-                        Log.v("debug", str);
-
+                        Log.d("str::..>>>>", str);
                         Message msgpwd = new Message();
                         msgpwd.what = 1;
                         Bundle data = new Bundle();
@@ -340,6 +355,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     strRfid += strData;
 //                    edittext_rfidoutput.setText(strRfid);
                     Log.d("test", strRfid);
+                    m_rkctrl.exec_io_cmd(6, 0);
+                    Log.d("open", "关闭继电器控制电磁锁");
+                    Handler handler = new Handler();
+                    handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            m_rkctrl.exec_io_cmd(6, 1);
+                            Log.d("close", "打开继电器控制电磁锁");
+
+                        }
+                    }, 3000);//3秒后执行
+                    break;
 
             }
 
@@ -440,10 +467,25 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 if (psd.equals(password)) {
                     //开门成功
                     passwodrOpen.setVisibility(View.GONE);
+                    m_rkctrl.exec_io_cmd(6, 0);
+                    Log.d("open", "关闭继电器控制电磁锁");
                     openSuccess = LayoutInflater.from(MainActivity.this).inflate(R.layout.open_door_success, null);
                     fl_replace.addView(openSuccess);
                     back_open = openSuccess.findViewById(R.id.back_open);
                     back_open.setOnClickListener(MainActivity.this);
+                    Handler handler = new Handler();
+                    handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            m_rkctrl.exec_io_cmd(6, 1);
+                            Log.d("close", "打开继电器控制电磁锁");
+
+                        }
+                    }, 3000);//3秒后执行
+//                    openSuccess = LayoutInflater.from(MainActivity.this).inflate(R.layout.open_door_success, null);
+//                    fl_replace.addView(openSuccess);
+//                    back_open = openSuccess.findViewById(R.id.back_open);
+//                    back_open.setOnClickListener(MainActivity.this);
                 } else {
                     Toast.makeText(this, "输入的开门密码错误，请重新输入", Toast.LENGTH_LONG).show();
                     break;
@@ -621,10 +663,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         Log.d("uID", "" + userId);
                         doSendLog(userId);
                         openCodeOpen.setVisibility(View.GONE);
+                        m_rkctrl.exec_io_cmd(6, 0);
+                        Log.d("open", "关闭继电器控制电磁锁");
+
                         openSuccess = LayoutInflater.from(MainActivity.this).inflate(R.layout.open_door_success, null);
                         fl_replace.addView(openSuccess);
                         back_open = openSuccess.findViewById(R.id.back_open);
                         back_open.setOnClickListener(MainActivity.this);
+                        Handler handler = new Handler();
+                        handler.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                m_rkctrl.exec_io_cmd(6, 1);
+                                Log.d("close", "打开继电器控制电磁锁");
+
+                            }
+                        }, 3000);//3秒后执行
                     } else {
                         Toast.makeText(MainActivity.this, response.getString("message"), Toast.LENGTH_LONG).show();
                         return;
@@ -910,8 +964,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 mainFragment.setVisibility(View.GONE);
                 openSuccess = LayoutInflater.from(MainActivity.this).inflate(R.layout.open_door_success, null);
                 fl_replace.addView(openSuccess);
+                m_rkctrl.exec_io_cmd(6, 0);
+                Log.d("", "关闭继电器控制电磁所");
                 back_open = openSuccess.findViewById(R.id.back_open);
                 back_open.setOnClickListener(this);
+                Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        m_rkctrl.exec_io_cmd(6, 1);
+                        Log.d("close", "打开继电器控制电磁锁");
+
+                    }
+                }, 3000);//3秒后执行
             } else {
                 Toast.makeText(MainActivity.this, "未识别，请重新识别或选择其他开门方式", Toast.LENGTH_LONG).show();
                 return;
@@ -1072,6 +1137,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         fl_replace.addView(openSuccess);
                         back_open = openSuccess.findViewById(R.id.back_open);
                         back_open.setOnClickListener(MainActivity.this);
+                        m_rkctrl.exec_io_cmd(6, 0);
+                        Log.d("", "关闭继电器控制电磁所");
+                        Handler handler = new Handler();
+                        handler.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                m_rkctrl.exec_io_cmd(6, 1);
+                                Log.d("close", "打开继电器控制电磁锁");
+
+                            }
+                        }, 3000);//3秒后执行
                     } else {
                         Toast.makeText(MainActivity.this, response.getString("message"), Toast.LENGTH_LONG).show();
                         return;
