@@ -68,6 +68,7 @@ public class LoginActivity extends AppCompatActivity {
                 values.put(MediaStore.Images.Media.MIME_TYPE, "image/jpeg");
                 Uri uri = getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
                 ((com.max_plus.homedooropenplate.Application) (LoginActivity.this.getApplicationContext())).setCaptureImage(uri);
+                Log.d("url==>>>", "" + uri);
                 fintent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
                 startActivityForResult(fintent, 1);
             }

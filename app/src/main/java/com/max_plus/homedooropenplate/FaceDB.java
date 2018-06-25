@@ -24,12 +24,12 @@ import java.util.List;
 public class FaceDB {
     private final String TAG = this.getClass().toString();
 
-    public static String appid = "7Q9NG1WNBwTa6f7J5eUoaUHZDvasG2PpT5v96YLaTDR7";
-    public static String ft_key = "DMhLmSP1PQ3XVd8bGmP6MjEaWW1AoEUzbbKRjmKHxvD8";
-    public static String fd_key = "DMhLmSP1PQ3XVd8bGmP6MjEhfuGLuPaGhf5Rak6G8u73";
-    public static String fr_key = "DMhLmSP1PQ3XVd8bGmP6MjF5A73omuGJb4yDMRvGrHKg";
-    public static String age_key = "DMhLmSP1PQ3XVd8bGmP6MjFSeJqLEqeU3K8X1TaXWNbS";
-    public static String gender_key = "DMhLmSP1PQ3XVd8bGmP6MjFZoi6WGeBw6e2bN5CQZ4A9";
+    public static String appid = "7Q9NG1WNBwTa6f7J5eUoaUHvi8NPYEfu33A8upEDjcvX";
+    public static String ft_key = "FmsQBUYRhoUteovgAZagukuoB9rCt6ewcWKh6n7GfSGQ";
+    public static String fd_key = "FmsQBUYRhoUteovgAZagukuvLZ7LndcNTMQ5ehFrb2eN";
+    public static String fr_key = "FmsQBUYRhoUteovgAZagukvHpktrVGDeEaZyf8bgJcrF";
+    public static String age_key = "FmsQBUYRhoUteovgAZagukvfJxgNcBgNCZabTsXLZeof";
+    public static String gender_key = "FmsQBUYRhoUteovgAZagukvnUMwYEeeWvKX2n3t87YbR";
 
     String mDBPath;
     public List<FaceRegist> mRegister;
