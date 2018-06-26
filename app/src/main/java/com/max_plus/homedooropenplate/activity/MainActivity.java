@@ -49,6 +49,7 @@ import com.loopj.android.http.RequestParams;
 import com.max_plus.homedooropenplate.DetecterActivity;
 import com.max_plus.homedooropenplate.R;
 import com.max_plus.homedooropenplate.RegisterActivity;
+import com.max_plus.homedooropenplate.Tools;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -217,6 +218,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        if (!Tools.isNetworkConnected(this)) {
+            Toast.makeText(MainActivity.this, R.string.no_network, Toast.LENGTH_LONG).show();
+            return;
+        }
         //用极光推送设置别名
         mac = getLocalMac(this);
         JPushInterface.setAlias(this, 1, mac.replace(":", ""));
@@ -496,6 +501,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 mainFragment.setVisibility(View.VISIBLE);
                 break;
             case R.id.tdc_open://二维码开门
+                if (!Tools.isNetworkConnected(this)) {
+                    Toast.makeText(MainActivity.this, R.string.no_network, Toast.LENGTH_LONG).show();
+                    return;
+                }
                 mCameraDialog.dismiss();
                 if (checkSelfPermission(Manifest.permission.RECORD_AUDIO, PERMISSION_REQ_ID_RECORD_AUDIO) && checkSelfPermission(Manifest.permission.CAMERA, PERMISSION_REQ_ID_CAMERA)) {
                     Intent intentt = new Intent(MainActivity.this,
@@ -515,6 +524,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //                startActivityForResult(tdsIntent, 0);
                 break;
             case R.id.code_open://开门码开门
+                if (!Tools.isNetworkConnected(this)) {
+                    Toast.makeText(MainActivity.this, R.string.no_network, Toast.LENGTH_LONG).show();
+                    return;
+                }
                 mCameraDialog.dismiss();
                 mainFragment.setVisibility(View.GONE);
                 openCodeOpen = LayoutInflater.from(MainActivity.this).inflate(R.layout.open_code_open_fragment, null);
@@ -550,6 +563,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.call_user://呼叫户主页面
                 // fl_replace.removeView(mainFragment);
+                if (!Tools.isNetworkConnected(this)) {
+                    Toast.makeText(MainActivity.this, R.string.no_network, Toast.LENGTH_LONG).show();
+                    return;
+                }
                 mainFragment.setVisibility(View.GONE);
                 call_userFragment = LayoutInflater.from(MainActivity.this).inflate(R.layout.call_user_fragment, null);
                 fl_replace.addView(call_userFragment);
@@ -562,6 +579,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 et_doorNum = call_userFragment.findViewById(R.id.et_doorNum);
                 break;
             case R.id.call_Property://呼叫物管页面
+                if (!Tools.isNetworkConnected(this)) {
+                    Toast.makeText(MainActivity.this, R.string.no_network, Toast.LENGTH_LONG).show();
+                    return;
+                }
                 mCameraDialog2.dismiss();
                 doCallPropertyManagement();
                 break;
@@ -569,6 +590,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 mCameraDialog2.dismiss();
                 break;
             case R.id.bt_ok://呼叫户主开启视频
+                if (!Tools.isNetworkConnected(this)) {
+                    Toast.makeText(MainActivity.this, R.string.no_network, Toast.LENGTH_LONG).show();
+                    return;
+                }
                 doorNum = et_doorNum.getText().toString().trim();
                 if (doorNum.equals("")) {
                     Toast.makeText(MainActivity.this, getResources().getString(R.string.pl_put_in_door_no), Toast.LENGTH_LONG).show();
@@ -577,6 +602,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 checkDoorNum(doorNum);
                 break;
             case R.id.bt_nameok://检测姓氏
+                if (!Tools.isNetworkConnected(this)) {
+                    Toast.makeText(MainActivity.this, R.string.no_network, Toast.LENGTH_LONG).show();
+                    return;
+                }
                 userName = et_userNum.getText().toString().trim();
                 if (userName.length() == 0) {
                     Toast.makeText(MainActivity.this, "用户姓氏不能为空", Toast.LENGTH_LONG).show();
@@ -605,6 +634,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     //开门成功返回服务器log
     private void doSendLog(int Id) {
+        if (!Tools.isNetworkConnected(this)) {
+            Toast.makeText(MainActivity.this, R.string.no_network, Toast.LENGTH_LONG).show();
+            return;
+        }
         mac = getLocalMac(this);
         currentTime = getCurrentTime();
         Log.d("currentTime", "" + currentTime);
@@ -643,6 +676,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     //开门码开门
     private void doOpenCodeOpenDoor(int openCode) {
+        if (!Tools.isNetworkConnected(this)) {
+            Toast.makeText(MainActivity.this, R.string.no_network, Toast.LENGTH_LONG).show();
+            return;
+        }
         mac = getLocalMac(this);
         currentTime = getCurrentTime();
         AsyncHttpClient client = new AsyncHttpClient();
@@ -699,6 +736,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     //呼叫物管开启视频
     private void doCallPropertyManagement() {
+        if (!Tools.isNetworkConnected(this)) {
+            Toast.makeText(MainActivity.this, R.string.no_network, Toast.LENGTH_LONG).show();
+            return;
+        }
         mac = getLocalMac(this);
         currentTime = getCurrentTime();
         AsyncHttpClient client = new AsyncHttpClient();
@@ -745,6 +786,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     //检查房号是否正确
     private void checkDoorNum(final String doorNum) {
+        if (!Tools.isNetworkConnected(this)) {
+            Toast.makeText(MainActivity.this, R.string.no_network, Toast.LENGTH_LONG).show();
+            return;
+        }
         mac = getLocalMac(this);
         currentTime = getCurrentTime();
         AsyncHttpClient client = new AsyncHttpClient();
@@ -815,6 +860,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     //验证用户姓氏
     private void doVerifyName(final String mac, final String doorNum, String userName) {
+        if (!Tools.isNetworkConnected(this)) {
+            Toast.makeText(MainActivity.this, R.string.no_network, Toast.LENGTH_LONG).show();
+            return;
+        }
         currentTime = getCurrentTime();
         AsyncHttpClient client = new AsyncHttpClient();
         client.addHeader("M-Sign", "1");
@@ -852,6 +901,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     //呼叫用户
     private void doCallOwner(String mac, String doorNum) {
+        if (!Tools.isNetworkConnected(this)) {
+            Toast.makeText(MainActivity.this, R.string.no_network, Toast.LENGTH_LONG).show();
+            return;
+        }
         currentTime = getCurrentTime();
         AsyncHttpClient client = new AsyncHttpClient();
         client.addHeader("M-Sign", "1");
@@ -1116,6 +1169,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     //上传识别的二维码内容开门
     private void doTdcOpen(int codee) {
+        if (!Tools.isNetworkConnected(this)) {
+            Toast.makeText(MainActivity.this, R.string.no_network, Toast.LENGTH_LONG).show();
+            return;
+        }
         currentTime = getCurrentTime();
         mac = getLocalMac(this);
         AsyncHttpClient client = new AsyncHttpClient();
