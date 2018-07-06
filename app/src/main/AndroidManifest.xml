@@ -223,7 +223,7 @@
             android:screenOrientation="portrait"></activity>
         <activity
             android:name=".DetecterActivity"
-            android:screenOrientation="landscape" />
+            android:screenOrientation="portrait" />
         <activity
             android:name=".RegisterActivity"
             android:screenOrientation="portrait" />

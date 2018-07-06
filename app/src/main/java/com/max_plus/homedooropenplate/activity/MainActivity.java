@@ -46,6 +46,7 @@ import com.hurray.plugins.serialport;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
+import com.max_plus.homedooropenplate.Application;
 import com.max_plus.homedooropenplate.DetecterActivity;
 import com.max_plus.homedooropenplate.R;
 import com.max_plus.homedooropenplate.RegisterActivity;
@@ -431,7 +432,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //                } else {
 //                    Toast.makeText(this, "有注册人脸！", Toast.LENGTH_SHORT).show();
 //                }
-                startDetector(0);//1代表开启前置摄像头 0代表开启后置摄像头
+                if( ((Application)getApplicationContext()).mFaceDB.mRegister.isEmpty() ) {
+                    Toast.makeText(this, "没有注册人脸，请先注册！", Toast.LENGTH_SHORT).show();
+                } else {
+                    startDetector(0);//1代表开启前置摄像头 0代表开启后置摄像头
+                }
+
                 break;
             case R.id.tv_setting:
                 Intent intent = new Intent(this, SettingActivity.class);

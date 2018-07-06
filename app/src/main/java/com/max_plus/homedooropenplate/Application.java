@@ -15,7 +15,7 @@ import cn.jpush.android.api.JPushInterface;
 
 public class Application extends android.app.Application {
 	private final String TAG = this.getClass().toString();
-	FaceDB mFaceDB;
+	public FaceDB mFaceDB;
 	Uri mImage;
 
 	@Override
