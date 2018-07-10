@@ -139,7 +139,10 @@
             android:name="cn.jpush.android.service.DownloadService"
             android:enabled="true"
             android:exported="false" />
-
+        <!-- 关闭应用重新启动service -->
+        <service
+            android:process=":restart"
+            android:name="com.max_plus.homedooropenplate.activity.killSelfService" />
         <!-- Required SDK核心功能 -->
         <receiver android:name="cn.jpush.android.service.AlarmReceiver" />
 
@@ -199,6 +202,8 @@
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.HOME" />
+                <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

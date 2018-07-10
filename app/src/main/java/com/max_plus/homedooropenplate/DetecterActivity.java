@@ -189,6 +189,7 @@ public class DetecterActivity extends Activity implements OnCameraListener, View
                             Intent intentTemp = new Intent();
                             intentTemp.putExtra("open", 1);
                             setResult(3, intentTemp);
+                            onDestroy();
                             finish();
                         }
                     });
@@ -218,15 +219,17 @@ public class DetecterActivity extends Activity implements OnCameraListener, View
                             Intent intentTemp2 = new Intent();
                             intentTemp2.putExtra("open", 0);
                             setResult(3, intentTemp2);
+                            onDestroy();
                             finish();
+
                         }
                     });
 
                 }
                 mImageNV21 = null;
             } else {
-                Log.d("mImageNV21==>>>", "mImageNV21..212121");
-                return;
+//                Log.d("mImageNV21==>>>", "mImageNV21..212121");
+//                return;
             }
 
         }
@@ -386,13 +389,13 @@ public class DetecterActivity extends Activity implements OnCameraListener, View
             Log.d(TAG, "Face:" + face.toString());
         }
         if (mImageNV21 == null) {
-            Log.d("mImageNV21==null","0000");
+            Log.d("mImageNV21==null", "0000");
             if (!result.isEmpty()) {
                 Log.d("mImageNV21>result", "" + result);
                 mAFT_FSDKFace = result.get(0).clone();
                 mImageNV21 = data.clone();
             } else {
-                Log.d("mImageNV21>result", "kong" );
+                Log.d("mImageNV21>result", "kong");
                 if (!isPostted) {
                     Log.d("mImageNV21>isPostted", "" + isPostted);
                     mHandler.removeCallbacks(hide);

@@ -11,6 +11,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Message;
 import android.text.InputFilter;
 import android.util.Log;
@@ -37,6 +38,7 @@ import com.guo.android_extend.image.ImageConverter;
 import com.guo.android_extend.widget.ExtImageView;
 import com.guo.android_extend.widget.HListView;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -73,6 +75,15 @@ public class RegisterActivity extends Activity implements SurfaceHolder.Callback
         // TODO Auto-generated method stub
         super.onCreate(savedInstanceState);
         this.setContentView(R.layout.activity_register);
+        //新建一个File，传入文件夹目录
+        File file = new File(Environment.getExternalStorageDirectory() + "/face");
+        //判断文件夹是否存在，如果不存在就创建，否则不创建
+        if (!file.exists()) {
+            //通过file的mkdirs()方法创建目录中包含却不存在的文件夹
+            file.mkdirs();
+        }
+
+        Log.d("MPATH", "" + Tools.fileIsExists(Environment.getExternalStorageDirectory() + "/face"));
         //initial data.
         if (!getIntentData(getIntent().getExtras())) {
             Log.e(TAG, "getIntentData fail!");
@@ -297,8 +308,10 @@ public class RegisterActivity extends Activity implements SurfaceHolder.Callback
                             .show();
                 } else if (msg.arg1 == MSG_EVENT_NO_FEATURE) {
                     Toast.makeText(RegisterActivity.this, "人脸特征无法检测，请换一张图片", Toast.LENGTH_SHORT).show();
+                    finish();
                 } else if (msg.arg1 == MSG_EVENT_NO_FACE) {
                     Toast.makeText(RegisterActivity.this, "没有检测到人脸，请换一张图片", Toast.LENGTH_SHORT).show();
+                    finish();
                 } else if (msg.arg1 == MSG_EVENT_FD_ERROR) {
                     Toast.makeText(RegisterActivity.this, "FD初始化失败，错误码：" + msg.arg2, Toast.LENGTH_SHORT).show();
                 } else if (msg.arg1 == MSG_EVENT_FR_ERROR) {

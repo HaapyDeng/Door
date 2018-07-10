@@ -8,6 +8,7 @@ import com.arcsoft.facerecognition.AFR_FSDKFace;
 import com.arcsoft.facerecognition.AFR_FSDKVersion;
 import com.guo.android_extend.java.ExtInputStream;
 import com.guo.android_extend.java.ExtOutputStream;
+import com.max_plus.homedooropenplate.activity.LoginActivity;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -97,13 +98,20 @@ public class FaceDB {
                 mUpgrade = true;
             }
             //load all regist name.
-            if (version_saved != null) {
-                for (String name = bos.readString(); name != null; name = bos.readString()) {
-                    if (new File(mDBPath + "/" + name + ".data").exists()) {
-                        mRegister.add(new FaceRegist(new String(name)));
-                    }
+            FileInputStream fsf = new FileInputStream(mDBPath + "/facef.txt");
+            ExtInputStream bosf = new ExtInputStream(fsf);
+            for (String name = bosf.readString(); name != null; name = bosf.readString()) {
+                if (new File(mDBPath + "/" + name + ".dataf").exists()) {
+                    mRegister.add(new FaceRegist(new String(name)));
                 }
             }
+//            if (version_saved != null) {
+//                for (String name = bos.readString(); name != null; name = bos.readString()) {
+//                    if (new File(mDBPath + "/" + name + ".data").exists()) {
+//                        mRegister.add(new FaceRegist(new String(name)));
+//                    }
+//                }
+//            }
             bos.close();
             fs.close();
             return true;
@@ -116,33 +124,35 @@ public class FaceDB {
     }
 
     public boolean loadFaces() {
-        if (loadInfo()) {
-            try {
-                for (FaceRegist face : mRegister) {
-                    Log.d(TAG, "load name:" + face.mName + "'s face feature data.");
-                    FileInputStream fs = new FileInputStream(mDBPath + "/" + face.mName + ".data");
-                    ExtInputStream bos = new ExtInputStream(fs);
-                    AFR_FSDKFace afr = null;
-                    do {
-                        if (afr != null) {
-                            if (mUpgrade) {
-                                //upgrade data.
-                            }
-                            face.mFaceList.add(afr);
+        Log.d("mDBPath,>>>", mDBPath);
+        loadInfo();
+//        if (loadInfo()) {
+        try {
+            for (FaceRegist face : mRegister) {
+                Log.d(TAG, "load name:" + face.mName + "'s face feature data.");
+                FileInputStream fs = new FileInputStream(mDBPath + "/" + face.mName + ".dataf");
+                ExtInputStream bos = new ExtInputStream(fs);
+                AFR_FSDKFace afr = null;
+                do {
+                    if (afr != null) {
+                        if (mUpgrade) {
+                            //upgrade data.
                         }
-                        afr = new AFR_FSDKFace();
-                    } while (bos.readBytes(afr.getFeatureData()));
-                    bos.close();
-                    fs.close();
-                    Log.d(TAG, "load name: size = " + face.mFaceList.size());
-                }
-                return true;
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
+                        face.mFaceList.add(afr);
+                    }
+                    afr = new AFR_FSDKFace();
+                } while (bos.readBytes(afr.getFeatureData()));
+                bos.close();
+                fs.close();
+                Log.d(TAG, "load name: size = " + face.mFaceList.size());
             }
+            return true;
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
+//        }
         return false;
     }
 
@@ -164,6 +174,7 @@ public class FaceDB {
             }
 
             if (saveInfo()) {
+                Log.d("DBPATH==", mDBPath);
                 //update all names
                 FileOutputStream fs = new FileOutputStream(mDBPath + "/facef.txt", true);
                 ExtOutputStream bos = new ExtOutputStream(fs);

@@ -2,6 +2,7 @@ package com.max_plus.homedooropenplate.activity;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.ActivityManager;
 import android.app.Dialog;
 import android.content.ContentUris;
 import android.content.Context;
@@ -432,7 +433,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //                } else {
 //                    Toast.makeText(this, "有注册人脸！", Toast.LENGTH_SHORT).show();
 //                }
-                if( ((Application)getApplicationContext()).mFaceDB.mRegister.isEmpty() ) {
+                if (((Application) getApplicationContext()).mFaceDB.mRegister.isEmpty()) {
                     Toast.makeText(this, "没有注册人脸，请先注册！", Toast.LENGTH_SHORT).show();
                 } else {
                     startDetector(0);//1代表开启前置摄像头 0代表开启后置摄像头
@@ -1033,12 +1034,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     public void run() {
                         m_rkctrl.exec_io_cmd(6, 1);
                         Log.d("close", "打开继电器控制电磁锁");
-
+                        finish();
+//                        Tools.restartAPP(MainActivity.this);
+                        System.exit(0);
+//                        onDestroy();
+//                        android.os.Process.killProcess(android.os.Process.myPid());
+//                        ActivityManager am = (ActivityManager) MainActivity.this.getSystemService(MainActivity.ACTIVITY_SERVICE);
+//                        am.restartPackage("com.max_plus.homedooropenplate");
                     }
                 }, 3000);//3秒后执行
             } else {
                 Toast.makeText(MainActivity.this, "未识别，请重新识别或选择其他开门方式", Toast.LENGTH_LONG).show();
-                return;
+                finish();
+                System.exit(0);
             }
         }
 

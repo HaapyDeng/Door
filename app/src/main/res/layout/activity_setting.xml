@@ -120,4 +120,23 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="#E6E6E6" />
+    <TextView
+        android:id="@+id/bt_facer"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:background="#FFFFFF"
+        android:drawablePadding="10dp"
+        android:drawableRight="@drawable/arrow"
+        android:gravity="center_vertical"
+        android:paddingLeft="24dp"
+        android:paddingRight="24dp"
+        android:singleLine="true"
+        android:text="人脸注册"
+        android:textColor="#666666"
+        android:textSize="30dp" />
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#E6E6E6" />
 </LinearLayout>
