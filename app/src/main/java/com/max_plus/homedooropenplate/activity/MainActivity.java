@@ -1045,8 +1045,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 }, 3000);//3秒后执行
             } else {
                 Toast.makeText(MainActivity.this, "未识别，请重新识别或选择其他开门方式", Toast.LENGTH_LONG).show();
-                finish();
-                System.exit(0);
+                Handler handler2 = new Handler();
+                handler2.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        finish();
+                        System.exit(0);
+                    }
+                }, 2000);
+
             }
         }
 
@@ -1389,4 +1396,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         return true;
     }
 
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
 }
