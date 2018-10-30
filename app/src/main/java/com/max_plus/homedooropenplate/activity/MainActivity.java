@@ -4,6 +4,9 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.ActivityManager;
 import android.app.Dialog;
+import android.bluetooth.BluetoothAdapter;
+import android.bluetooth.BluetoothDevice;
+import android.bluetooth.BluetoothProfile;
 import android.content.ContentUris;
 import android.content.Context;
 import android.content.Intent;
@@ -22,6 +25,7 @@ import android.os.Looper;
 import android.os.Message;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -52,12 +56,16 @@ import com.max_plus.homedooropenplate.DetecterActivity;
 import com.max_plus.homedooropenplate.R;
 import com.max_plus.homedooropenplate.RegisterActivity;
 import com.max_plus.homedooropenplate.Tools;
+import com.max_plus.homedooropenplate.ble.bleutils.BleController;
+import com.max_plus.homedooropenplate.ble.bleutils.callback.ConnectCallback;
+import com.max_plus.homedooropenplate.ble.bleutils.callback.OnWriteCallback;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.Calendar;
+import java.util.List;
 import java.util.TimeZone;
 
 import cn.jpush.android.api.JPushInterface;
@@ -72,6 +80,7 @@ import static com.max_plus.homedooropenplate.getUrlCode.URLRequest;
 //import com.yzq.zxinglibrary.android.CaptureActivity;
 //import com.yzq.zxinglibrary.bean.ZxingConfig;
 //import com.yzq.zxinglibrary.common.Constant;
+
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     private static final int msgTime = 1;
@@ -105,6 +114,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private MyHandler myHandler = new MyHandler();
     public serialport pSerialport = new serialport();
     private rkctrl m_rkctrl = new rkctrl();
+
+    private BleController mBleController;//蓝牙工具类
+    private String mDeviceAddress = "88:3F:4A:EC:F1:54";//当前连接的mac地址
+    private BluetoothAdapter bluetoothAdapter;
+
 
     //视频通话hander
     private final IRtcEngineEventHandler mRtcEventHandler = new IRtcEngineEventHandler() { // Tutorial Step 1
@@ -216,10 +230,34 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR2)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        mBleController = BleController.getInstance().initble(this);
+        mBleController.Connect(mDeviceAddress, new ConnectCallback() {
+            @Override
+            public void onConnSuccess() {
+                Log.d("onConnSuccess>>>", "onConnSuccess");
+                mBleController.WriteBuffer("524C323232", new OnWriteCallback() {
+                    @Override
+                    public void onSuccess() {
+                        Log.d("onConnSuccess>>>", "ok");
+                    }
+
+                    @Override
+                    public void onFailed(int state) {
+                        Log.d("onConnSuccess>>>", "fail");
+                    }
+                });
+            }
+
+            @Override
+            public void onConnFailed() {
+                Log.d("onConnFailed>>>", "onConnFailed");
+            }
+        });
         if (!Tools.isNetworkConnected(this)) {
             Toast.makeText(MainActivity.this, R.string.no_network, Toast.LENGTH_LONG).show();
             return;
@@ -289,7 +327,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //        bt_regist = mainFragment.findViewById(R.id.bt_regist);
 //        bt_regist.setOnClickListener(this);
         //开启刷卡开门线程
-        initSerial();
+//        initSerial();
 
 
     }
@@ -436,7 +474,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 if (((Application) getApplicationContext()).mFaceDB.mRegister.isEmpty()) {
                     Toast.makeText(this, "没有注册人脸，请先注册！", Toast.LENGTH_SHORT).show();
                 } else {
-                    startDetector(0);//1代表开启前置摄像头 0代表开启后置摄像头
+                    startDetector(1);//1代表开启前置摄像头 0代表开启后置摄像头
                 }
 
                 break;
@@ -479,21 +517,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 if (psd.equals(password)) {
                     //开门成功
                     passwodrOpen.setVisibility(View.GONE);
-                    m_rkctrl.exec_io_cmd(6, 0);
+//                    controller.write(bytes);
+
+//                    m_rkctrl.exec_io_cmd(6, 0);
                     Log.d("open", "关闭继电器控制电磁锁");
                     openSuccess = LayoutInflater.from(MainActivity.this).inflate(R.layout.open_door_success, null);
                     fl_replace.addView(openSuccess);
                     back_open = openSuccess.findViewById(R.id.back_open);
                     back_open.setOnClickListener(MainActivity.this);
-                    Handler handler = new Handler();
-                    handler.postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            m_rkctrl.exec_io_cmd(6, 1);
-                            Log.d("close", "打开继电器控制电磁锁");
-
-                        }
-                    }, 3000);//3秒后执行
+//                    Handler handler = new Handler();
+//                    handler.postDelayed(new Runnable() {
+//                        @Override
+//                        public void run() {
+//                            m_rkctrl.exec_io_cmd(6, 1);
+//                            Log.d("close", "打开继电器控制电磁锁");
+//
+//                        }
+//                    }, 3000);//3秒后执行
 //                    openSuccess = LayoutInflater.from(MainActivity.this).inflate(R.layout.open_door_success, null);
 //                    fl_replace.addView(openSuccess);
 //                    back_open = openSuccess.findViewById(R.id.back_open);
@@ -1034,9 +1074,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     public void run() {
                         m_rkctrl.exec_io_cmd(6, 1);
                         Log.d("close", "打开继电器控制电磁锁");
-                        finish();
+                        openSuccess.setVisibility(View.GONE);
+                        mainFragment.setVisibility(View.VISIBLE);
+//                        finish();
 //                        Tools.restartAPP(MainActivity.this);
-                        System.exit(0);
+//                        System.exit(0);
 //                        onDestroy();
 //                        android.os.Process.killProcess(android.os.Process.myPid());
 //                        ActivityManager am = (ActivityManager) MainActivity.this.getSystemService(MainActivity.ACTIVITY_SERVICE);
@@ -1049,8 +1091,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 handler2.postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        finish();
-                        System.exit(0);
+                        return;
+//                        finish();
+//                        System.exit(0);
                     }
                 }, 2000);
 
@@ -1396,6 +1439,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         return true;
     }
 
+
     @Override
     protected void onRestart() {
         super.onRestart();
@@ -1404,5 +1448,64 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onResume() {
         super.onResume();
+        checkGps();
     }
+
+    /**
+     * 开启位置权限
+     */
+    private void checkGps() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (ContextCompat.checkSelfPermission(this,
+                    Manifest.permission.ACCESS_COARSE_LOCATION)
+                    != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(this,
+                        new String[]{Manifest.permission.ACCESS_COARSE_LOCATION,
+                                Manifest.permission.ACCESS_FINE_LOCATION},
+                        1);
+            }
+        }
+    }
+
+    //检查已连接的蓝牙设备
+    private String getConnectBt() {
+        int a2dp = bluetoothAdapter.getProfileConnectionState(BluetoothProfile.A2DP);
+        int headset = bluetoothAdapter.getProfileConnectionState(BluetoothProfile.HEADSET);
+        int health = bluetoothAdapter.getProfileConnectionState(BluetoothProfile.HEALTH);
+        int flag = -1;
+        if (a2dp == BluetoothProfile.STATE_CONNECTED) {
+            flag = a2dp;
+        } else if (headset == BluetoothProfile.STATE_CONNECTED) {
+            flag = headset;
+        } else if (health == BluetoothProfile.STATE_CONNECTED) {
+            flag = health;
+        }
+        if (flag != -1) {
+            bluetoothAdapter.getProfileProxy(MainActivity.this, new BluetoothProfile.ServiceListener() {
+                @Override
+                public void onServiceDisconnected(int profile) {
+                    Toast.makeText(MainActivity.this, profile + "", Toast.LENGTH_SHORT).show();
+                }
+
+                @Override
+                public void onServiceConnected(int profile, BluetoothProfile proxy) {
+                    List<BluetoothDevice> mDevices = proxy.getConnectedDevices();
+                    if (mDevices != null && mDevices.size() > 0) {
+                        for (BluetoothDevice device : mDevices) {
+                            if (device.getName().equals("RCB0002121")) {
+                                mDeviceAddress = device.getAddress();
+                            }
+
+                            Toast.makeText(MainActivity.this, device.getName() + "," + device.getAddress(), Toast.LENGTH_SHORT).show();
+                        }
+                    } else {
+                        Toast.makeText(MainActivity.this, "mDevices is null", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }, flag);
+        }
+        return mDeviceAddress;
+    }
+
+
 }

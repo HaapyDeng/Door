@@ -42,24 +42,24 @@
         android:layout_height="8dp" />
 
     <!--<TextView-->
-        <!--android:id="@+id/tv_set_time"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="80dp"-->
-        <!--android:background="#FFFFFF"-->
-        <!--android:drawablePadding="10dp"-->
-        <!--android:drawableRight="@drawable/arrow"-->
-        <!--android:gravity="center_vertical"-->
-        <!--android:paddingLeft="24dp"-->
-        <!--android:paddingRight="24dp"-->
-        <!--android:singleLine="true"-->
-        <!--android:text="@string/set_time"-->
-        <!--android:textColor="#666666"-->
-        <!--android:textSize="30dp" />-->
+    <!--android:id="@+id/tv_set_time"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="80dp"-->
+    <!--android:background="#FFFFFF"-->
+    <!--android:drawablePadding="10dp"-->
+    <!--android:drawableRight="@drawable/arrow"-->
+    <!--android:gravity="center_vertical"-->
+    <!--android:paddingLeft="24dp"-->
+    <!--android:paddingRight="24dp"-->
+    <!--android:singleLine="true"-->
+    <!--android:text="@string/set_time"-->
+    <!--android:textColor="#666666"-->
+    <!--android:textSize="30dp" />-->
 
     <!--<ImageView-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="1dp"-->
-        <!--android:background="#E6E6E6" />-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="1dp"-->
+    <!--android:background="#E6E6E6" />-->
 
     <TextView
         android:id="@+id/tv_setloginpsd"
@@ -120,6 +120,7 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="#E6E6E6" />
+
     <TextView
         android:id="@+id/bt_facer"
         android:layout_width="match_parent"
@@ -139,4 +140,31 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="#E6E6E6" />
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#E6E6E6" />
+
+    <TextView
+        android:id="@+id/bt_openblue"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:background="#FFFFFF"
+        android:drawablePadding="10dp"
+        android:drawableRight="@drawable/arrow"
+        android:gravity="center_vertical"
+        android:paddingLeft="24dp"
+        android:paddingRight="24dp"
+        android:singleLine="true"
+        android:text="设置门禁"
+        android:textColor="#666666"
+        android:textSize="30dp"
+        android:visibility="invisible" />
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#E6E6E6"
+        android:visibility="invisible" />
 </LinearLayout>

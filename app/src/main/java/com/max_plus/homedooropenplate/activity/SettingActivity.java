@@ -24,7 +24,7 @@ import com.max_plus.homedooropenplate.RegisterActivity;
 
 public class SettingActivity extends Activity implements View.OnClickListener {
     private ImageView iv_setback;
-    private TextView tv_set_time, tv_setloginpsd, tv_setopenpsd, tv_setopenchoose, bt_facer;
+    private TextView tv_set_time, tv_setloginpsd, tv_setopenpsd, tv_setopenchoose, bt_facer, bt_openblue;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +47,9 @@ public class SettingActivity extends Activity implements View.OnClickListener {
 
         bt_facer = findViewById(R.id.bt_facer);
         bt_facer.setOnClickListener(this);
+
+        bt_openblue = findViewById(R.id.bt_openblue);
+        bt_openblue.setOnClickListener(this);
     }
 
     @Override
@@ -80,6 +83,10 @@ public class SettingActivity extends Activity implements View.OnClickListener {
                 Log.d("url==>>>", "" + uri);
                 fintent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
                 startActivityForResult(fintent, 1);
+                break;
+            case R.id.bt_openblue:
+//                Intent intent3 = new Intent(this, BluetoothActivity.class);
+//                startActivity(intent3);
                 break;
         }
     }

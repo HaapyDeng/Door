@@ -28,12 +28,12 @@
 
         <ImageView
             android:id="@+id/tv_setting"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:layout_marginRight="10dp"
             android:layout_weight="1"
-            android:paddingRight="10dp"
-            android:src="@mipmap/ic_setting" />
+            android:src="@mipmap/common_ic_setting_default" />
     </LinearLayout>
 
     <com.max_plus.homedooropenplate.MarqureeTextView
@@ -48,7 +48,7 @@
         android:marqueeRepeatLimit="marquee_forever"
         android:paddingLeft="20dp"
         android:singleLine="true"
-        android:text="2018年7月12日下午9点到第二天早上6点停水维修，请各位业主们准备好备用水源"
+        android:text="2018年11月12日下午9点到第二天早上6点停水维修，请各位业主们准备好备用水源"
         android:textColor="#333333"
         android:textSize="20dp" />
 
