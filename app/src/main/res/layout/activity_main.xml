@@ -103,7 +103,7 @@
                 android:drawableLeft="@mipmap/ic_xiaoyu"
                 android:gravity="center"
                 android:paddingLeft="24dp"
-                android:text="小雨（ 26℃ ）"
+                android:text="小雨（ 15℃ ）"
                 android:textColor="#333333"
                 android:textSize="30dp" />
 

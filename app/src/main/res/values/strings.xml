@@ -10,7 +10,7 @@
     <string name="login_in">登录</string>
     <string name="psd_error">输入密码错误请重试</string>
     <string name="auto_open">自助开门</string>
-    <string name="face_open">人脸识别开门</string>
+    <string name="face_open">人脸开门</string>
     <string name="call_open">呼叫开门</string>
     <string name="put_in_door_no">输入房间号</string>
     <string name="put_in_name">输入房主姓氏</string>

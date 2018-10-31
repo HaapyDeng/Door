@@ -76,8 +76,8 @@ public class BleController {
     //TODO 以下uuid根据公司硬件改变
     public static final String UUID_SERVICE = "0000ffe0-0000-1000-8000-00805f9b34fb";
     public static final String UUID_INDICATE = "0000000-0000-0000-8000-00805f9b0000";
-    public static final String UUID_NOTIFY = "0000fee7-0000-1000-8000-00805f9b34fb";
-    public static final String UUID_WRITE = "0000fee7-0000-1000-8000-00805f9b34fb";
+    public static final String UUID_NOTIFY = "0000ffe1-0000-1000-8000-00805f9b34fb";
+    public static final String UUID_WRITE = "0000ffe1-0000-1000-8000-00805f9b34fb";
     public static final String UUID_READ = "3f3e3d3c-3b3a-3938-3736-353433323130";
 
     public static synchronized BleController getInstance() {
@@ -221,12 +221,12 @@ public class BleController {
         //设置数组进去
 //        mBleGattCharacteristic.setValue(new byte[]{0x52, 0x4C, 0x32, 0x32, 0x32});
 //        mBleGattCharacteristic.setValue(HexUtil.hexStringToBytes(value), BluetoothGattCharacteristic.FORMAT_UINT16, 0);
-        mBleGattCharacteristic.setValue(HexUtil.hexStringToBytes("524C323232"));
+        mBleGattCharacteristic.setValue("RL222");
         //发送
 
         boolean b = mBleGatt.writeCharacteristic(mBleGattCharacteristic);
 
-        Log.e(TAG, "send:" + b + "data：" + (new byte[]{0x52, 0x4C, 0x32, 0x32, 0x32}));
+        Log.e(TAG, "send:" + b + "data：" + ("RL222"));
     }
 
     /**

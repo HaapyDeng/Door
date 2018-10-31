@@ -5,20 +5,18 @@ package com.max_plus.homedooropenplate.ble.bleutils;
  */
 public class HexUtil {
 
-    public static byte[] hexStringToBytes(String str) {
-        char[] chars = "0123456789ABCDEF".toCharArray();
-        StringBuilder sb = new StringBuilder("");
-        byte[] bs = str.getBytes();
-        int bit;
-
-        for (int i = 0; i < bs.length; i++) {
-            bit = (bs[i] & 0x0f0) >> 4;
-            sb.append(chars[bit]);
-            bit = bs[i] & 0x0f;
-            sb.append(chars[bit]);
-            sb.append(' ');
+    public static String hexStringToBytes(String str) {
+        //把字符串转换成char数组
+        char[] chars = str.toCharArray();
+        //新建一个字符串缓存类
+        StringBuffer hex = new StringBuffer();
+        //循环每一个char
+        for (int i = 0; i < chars.length; i++) {
+            //把每一个char都转换成16进制的，然后添加到字符串缓存对象中
+            hex.append(Integer.toHexString((int) chars[i]));
         }
-        return hexStr2Bytes(sb.toString().trim());
+        //最后返回字符串就是16进制的字符串
+        return hex.toString();
     }
 
     /**

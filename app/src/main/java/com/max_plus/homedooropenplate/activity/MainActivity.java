@@ -240,22 +240,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             @Override
             public void onConnSuccess() {
                 Log.d("onConnSuccess>>>", "onConnSuccess");
-                mBleController.WriteBuffer("524C323232", new OnWriteCallback() {
-                    @Override
-                    public void onSuccess() {
-                        Log.d("onConnSuccess>>>", "ok");
-                    }
 
-                    @Override
-                    public void onFailed(int state) {
-                        Log.d("onConnSuccess>>>", "fail");
-                    }
-                });
             }
 
             @Override
             public void onConnFailed() {
                 Log.d("onConnFailed>>>", "onConnFailed");
+                Toast.makeText(MainActivity.this, "门禁蓝牙连接失败，请重启app再试", Toast.LENGTH_SHORT).show();
             }
         });
         if (!Tools.isNetworkConnected(this)) {
@@ -291,21 +282,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //                    }
 //                }
 //            }).start();
-            m_rkctrl.exec_io_cmd(6, 0);
-            Log.d("open", "关闭继电器控制电磁锁");
+//            m_rkctrl.exec_io_cmd(6, 0);
+//            Log.d("open", "关闭继电器控制电磁锁");
             openSuccess = LayoutInflater.from(MainActivity.this).inflate(R.layout.open_door_success, null);
             fl_replace.addView(openSuccess);
             back_open = openSuccess.findViewById(R.id.back_open);
             back_open.setOnClickListener(MainActivity.this);
-            Handler handler = new Handler();
-            handler.postDelayed(new Runnable() {
+            mBleController.WriteBuffer("RL222", new OnWriteCallback() {
                 @Override
-                public void run() {
-                    m_rkctrl.exec_io_cmd(6, 1);
-                    Log.d("close", "打开继电器控制电磁锁");
-
+                public void onSuccess() {
+                    Log.d("onConnSuccess>>>", "ok");
                 }
-            }, 3000);//3秒后执行
+
+                @Override
+                public void onFailed(int state) {
+                    Log.d("onConnSuccess>>>", "fail");
+                }
+            });
         }
         //显示时间
         tv_time_year = findViewById(R.id.tv_time_set);
@@ -452,6 +445,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         startActivityForResult(it, 3);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR2)
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
@@ -525,6 +519,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     fl_replace.addView(openSuccess);
                     back_open = openSuccess.findViewById(R.id.back_open);
                     back_open.setOnClickListener(MainActivity.this);
+                    mBleController.WriteBuffer("RL222", new OnWriteCallback() {
+                        @Override
+                        public void onSuccess() {
+                            Log.d("onConnSuccess>>>", "ok");
+                        }
+
+                        @Override
+                        public void onFailed(int state) {
+                            Log.d("onConnSuccess>>>", "fail");
+                        }
+                    });
 //                    Handler handler = new Handler();
 //                    handler.postDelayed(new Runnable() {
 //                        @Override
@@ -734,6 +739,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         client.addHeader("M-Timestamp", "" + currentTime);
         Log.d("url==>>>", ip + "/validate/code/" + mac + "/" + openCode);
         client.get(ip + "/validate/code/" + mac + "/" + openCode, new JsonHttpResponseHandler() {
+            @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR2)
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 super.onSuccess(statusCode, headers, response);
@@ -754,15 +760,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         fl_replace.addView(openSuccess);
                         back_open = openSuccess.findViewById(R.id.back_open);
                         back_open.setOnClickListener(MainActivity.this);
-                        Handler handler = new Handler();
-                        handler.postDelayed(new Runnable() {
+                        mBleController.WriteBuffer("RL222", new OnWriteCallback() {
                             @Override
-                            public void run() {
-                                m_rkctrl.exec_io_cmd(6, 1);
-                                Log.d("close", "打开继电器控制电磁锁");
-
+                            public void onSuccess() {
+                                Log.d("onConnSuccess>>>", "ok");
                             }
-                        }, 3000);//3秒后执行
+
+                            @Override
+                            public void onFailed(int state) {
+                                Log.d("onConnSuccess>>>", "fail");
+                            }
+                        });
                     } else {
                         Toast.makeText(MainActivity.this, response.getString("message"), Toast.LENGTH_LONG).show();
                         return;
@@ -1016,6 +1024,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         joinChannel();               // Tutorial Step 4
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR2)
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -1064,27 +1073,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 mainFragment.setVisibility(View.GONE);
                 openSuccess = LayoutInflater.from(MainActivity.this).inflate(R.layout.open_door_success, null);
                 fl_replace.addView(openSuccess);
-                m_rkctrl.exec_io_cmd(6, 0);
-                Log.d("", "关闭继电器控制电磁所");
+//                m_rkctrl.exec_io_cmd(6, 0);
+//                Log.d("", "关闭继电器控制电磁所");
                 back_open = openSuccess.findViewById(R.id.back_open);
                 back_open.setOnClickListener(this);
-                Handler handler = new Handler();
-                handler.postDelayed(new Runnable() {
+                mBleController.WriteBuffer("RL222", new OnWriteCallback() {
                     @Override
-                    public void run() {
-                        m_rkctrl.exec_io_cmd(6, 1);
-                        Log.d("close", "打开继电器控制电磁锁");
-                        openSuccess.setVisibility(View.GONE);
-                        mainFragment.setVisibility(View.VISIBLE);
-//                        finish();
-//                        Tools.restartAPP(MainActivity.this);
-//                        System.exit(0);
-//                        onDestroy();
-//                        android.os.Process.killProcess(android.os.Process.myPid());
-//                        ActivityManager am = (ActivityManager) MainActivity.this.getSystemService(MainActivity.ACTIVITY_SERVICE);
-//                        am.restartPackage("com.max_plus.homedooropenplate");
+                    public void onSuccess() {
+                        Log.d("onConnSuccess>>>", "ok");
                     }
-                }, 3000);//3秒后执行
+
+                    @Override
+                    public void onFailed(int state) {
+                        Log.d("onConnSuccess>>>", "fail");
+                    }
+                });
             } else {
                 Toast.makeText(MainActivity.this, "未识别，请重新识别或选择其他开门方式", Toast.LENGTH_LONG).show();
                 Handler handler2 = new Handler();
@@ -1243,6 +1246,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         client.addHeader("M-Sign", "1");
         client.addHeader("M-Timestamp", "" + currentTime);
         client.get(ip + "/validate/qr-code/" + mac + "/" + codee, new JsonHttpResponseHandler() {
+            @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR2)
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 super.onSuccess(statusCode, headers, response);
@@ -1258,17 +1262,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         fl_replace.addView(openSuccess);
                         back_open = openSuccess.findViewById(R.id.back_open);
                         back_open.setOnClickListener(MainActivity.this);
-                        m_rkctrl.exec_io_cmd(6, 0);
-                        Log.d("", "关闭继电器控制电磁所");
-                        Handler handler = new Handler();
-                        handler.postDelayed(new Runnable() {
+                        mBleController.WriteBuffer("RL222", new OnWriteCallback() {
                             @Override
-                            public void run() {
-                                m_rkctrl.exec_io_cmd(6, 1);
-                                Log.d("close", "打开继电器控制电磁锁");
-
+                            public void onSuccess() {
+                                Log.d("onConnSuccess>>>", "ok");
                             }
-                        }, 3000);//3秒后执行
+
+                            @Override
+                            public void onFailed(int state) {
+                                Log.d("onConnSuccess>>>", "fail");
+                            }
+                        });
                     } else {
                         Toast.makeText(MainActivity.this, response.getString("message"), Toast.LENGTH_LONG).show();
                         return;
