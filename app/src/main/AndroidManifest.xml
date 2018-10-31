@@ -55,12 +55,13 @@
     <application
         android:name=".Application"
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
-        android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
-        android:screenOrientation="portrait"
         android:hardwareAccelerated="false"
+        android:icon="@mipmap/logo"
+        android:label="@string/app_name"
         android:largeHeap="true"
+        android:persistent="true"
+        android:roundIcon="@mipmap/logo"
+        android:screenOrientation="portrait"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar"
         android:windowSoftInputMode="stateHidden">
@@ -144,8 +145,8 @@
             android:exported="false" />
         <!-- 关闭应用重新启动service -->
         <service
-            android:process=":restart"
-            android:name="com.max_plus.homedooropenplate.activity.killSelfService" />
+            android:name="com.max_plus.homedooropenplate.activity.killSelfService"
+            android:process=":restart" />
         <!-- Required SDK核心功能 -->
         <receiver android:name="cn.jpush.android.service.AlarmReceiver" />
 

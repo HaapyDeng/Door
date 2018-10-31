@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">OpenDoorPlate</string>
+    <string name="app_name">智慧宅邸</string>
     <string name="no_network">网络不可用，请稍后再试！</string>
     <string name="open_door_face">人脸识别开门</string>
     <string name="logo_string">迈普乐· 智慧宅邸</string>
