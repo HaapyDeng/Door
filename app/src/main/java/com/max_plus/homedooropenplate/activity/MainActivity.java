@@ -299,6 +299,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     Log.d("onConnSuccess>>>", "fail");
                 }
             });
+            Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    /**
+                     *要执行的操作
+                     */
+                    openSuccess.setVisibility(View.GONE);
+                    mainFragment.setVisibility(View.VISIBLE);
+                }
+            }, 2000);//3秒后执行Runnable中的run方法
+
         }
         //显示时间
         tv_time_year = findViewById(R.id.tv_time_set);
@@ -530,6 +542,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             Log.d("onConnSuccess>>>", "fail");
                         }
                     });
+                    Handler handler = new Handler();
+                    handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            /**
+                             *要执行的操作
+                             */
+                            openSuccess.setVisibility(View.GONE);
+                            mainFragment.setVisibility(View.VISIBLE);
+                        }
+                    }, 2000);//3秒后执行Runnable中的run方法
 //                    Handler handler = new Handler();
 //                    handler.postDelayed(new Runnable() {
 //                        @Override
@@ -753,8 +776,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         Log.d("uID", "" + userId);
                         doSendLog(userId);
                         openCodeOpen.setVisibility(View.GONE);
-                        m_rkctrl.exec_io_cmd(6, 0);
-                        Log.d("open", "关闭继电器控制电磁锁");
+//                        m_rkctrl.exec_io_cmd(6, 0);
+//                        Log.d("open", "关闭继电器控制电磁锁");
 
                         openSuccess = LayoutInflater.from(MainActivity.this).inflate(R.layout.open_door_success, null);
                         fl_replace.addView(openSuccess);
@@ -771,6 +794,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                                 Log.d("onConnSuccess>>>", "fail");
                             }
                         });
+                        Handler handler = new Handler();
+                        handler.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                /**
+                                 *要执行的操作
+                                 */
+                                openSuccess.setVisibility(View.GONE);
+                                mainFragment.setVisibility(View.VISIBLE);
+                            }
+                        }, 2000);//3秒后执行Runnable中的run方法
                     } else {
                         Toast.makeText(MainActivity.this, response.getString("message"), Toast.LENGTH_LONG).show();
                         return;
@@ -1088,6 +1122,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         Log.d("onConnSuccess>>>", "fail");
                     }
                 });
+                Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        /**
+                         *要执行的操作
+                         */
+                        openSuccess.setVisibility(View.GONE);
+                        mainFragment.setVisibility(View.VISIBLE);
+                    }
+                }, 2000);//3秒后执行Runnable中的run方法
             } else {
                 Toast.makeText(MainActivity.this, "未识别，请重新识别或选择其他开门方式", Toast.LENGTH_LONG).show();
                 Handler handler2 = new Handler();
@@ -1273,6 +1318,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                                 Log.d("onConnSuccess>>>", "fail");
                             }
                         });
+                        Handler handler = new Handler();
+                        handler.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                /**
+                                 *要执行的操作
+                                 */
+                                openSuccess.setVisibility(View.GONE);
+                                mainFragment.setVisibility(View.VISIBLE);
+                            }
+                        }, 2000);//3秒后执行Runnable中的run方法
                     } else {
                         Toast.makeText(MainActivity.this, response.getString("message"), Toast.LENGTH_LONG).show();
                         return;
