@@ -116,7 +116,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private rkctrl m_rkctrl = new rkctrl();
 
     private BleController mBleController;//蓝牙工具类
-    private String mDeviceAddress = "88:3F:4A:EC:F1:54";//当前连接的mac地址
+    private String mDeviceAddress = "88:3F:4A:EC:F1:54";//当前连接蓝牙继电器的mac地址
     private BluetoothAdapter bluetoothAdapter;
 
 
@@ -284,32 +284,37 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //            }).start();
 //            m_rkctrl.exec_io_cmd(6, 0);
 //            Log.d("open", "关闭继电器控制电磁锁");
-            openSuccess = LayoutInflater.from(MainActivity.this).inflate(R.layout.open_door_success, null);
-            fl_replace.addView(openSuccess);
-            back_open = openSuccess.findViewById(R.id.back_open);
-            back_open.setOnClickListener(MainActivity.this);
+
+
             mBleController.WriteBuffer("RL222", new OnWriteCallback() {
                 @Override
                 public void onSuccess() {
+                    openSuccess = LayoutInflater.from(MainActivity.this).inflate(R.layout.open_door_success, null);
+                    fl_replace.addView(openSuccess);
+                    back_open = openSuccess.findViewById(R.id.back_open);
+                    back_open.setOnClickListener(MainActivity.this);
+                    Handler handler = new Handler();
+                    handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            /**
+                             *要执行的操作
+                             */
+                            openSuccess.setVisibility(View.GONE);
+                            mainFragment.setVisibility(View.VISIBLE);
+                        }
+                    }, 2000);//3秒后执行Runnable中的run方法
                     Log.d("onConnSuccess>>>", "ok");
                 }
 
                 @Override
                 public void onFailed(int state) {
                     Log.d("onConnSuccess>>>", "fail");
+                    Toast.makeText(MainActivity.this, "蓝牙门禁已断开，请重启app再试", Toast.LENGTH_LONG).show();
+                    return;
                 }
             });
-            Handler handler = new Handler();
-            handler.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    /**
-                     *要执行的操作
-                     */
-                    openSuccess.setVisibility(View.GONE);
-                    mainFragment.setVisibility(View.VISIBLE);
-                }
-            }, 2000);//3秒后执行Runnable中的run方法
+
 
         }
         //显示时间
@@ -521,38 +526,42 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     break;
                 }
                 if (psd.equals(password)) {
-                    //开门成功
-                    passwodrOpen.setVisibility(View.GONE);
-//                    controller.write(bytes);
 
-//                    m_rkctrl.exec_io_cmd(6, 0);
-                    Log.d("open", "关闭继电器控制电磁锁");
-                    openSuccess = LayoutInflater.from(MainActivity.this).inflate(R.layout.open_door_success, null);
-                    fl_replace.addView(openSuccess);
-                    back_open = openSuccess.findViewById(R.id.back_open);
-                    back_open.setOnClickListener(MainActivity.this);
                     mBleController.WriteBuffer("RL222", new OnWriteCallback() {
                         @Override
                         public void onSuccess() {
                             Log.d("onConnSuccess>>>", "ok");
+                            //开门成功
+                            passwodrOpen.setVisibility(View.GONE);
+//                    controller.write(bytes);
+
+//                    m_rkctrl.exec_io_cmd(6, 0);
+                            Log.d("open", "关闭继电器控制电磁锁");
+                            openSuccess = LayoutInflater.from(MainActivity.this).inflate(R.layout.open_door_success, null);
+                            fl_replace.addView(openSuccess);
+                            back_open = openSuccess.findViewById(R.id.back_open);
+                            back_open.setOnClickListener(MainActivity.this);
+                            Handler handler = new Handler();
+                            handler.postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    /**
+                                     *要执行的操作
+                                     */
+                                    openSuccess.setVisibility(View.GONE);
+                                    mainFragment.setVisibility(View.VISIBLE);
+                                }
+                            }, 2000);//3秒后执行Runnable中的run方法
                         }
 
                         @Override
                         public void onFailed(int state) {
                             Log.d("onConnSuccess>>>", "fail");
+                            Toast.makeText(MainActivity.this, "蓝牙门禁已断开，请重启app再试", Toast.LENGTH_LONG).show();
+                            return;
                         }
                     });
-                    Handler handler = new Handler();
-                    handler.postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            /**
-                             *要执行的操作
-                             */
-                            openSuccess.setVisibility(View.GONE);
-                            mainFragment.setVisibility(View.VISIBLE);
-                        }
-                    }, 2000);//3秒后执行Runnable中的run方法
+
 //                    Handler handler = new Handler();
 //                    handler.postDelayed(new Runnable() {
 //                        @Override
@@ -779,32 +788,36 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //                        m_rkctrl.exec_io_cmd(6, 0);
 //                        Log.d("open", "关闭继电器控制电磁锁");
 
-                        openSuccess = LayoutInflater.from(MainActivity.this).inflate(R.layout.open_door_success, null);
-                        fl_replace.addView(openSuccess);
-                        back_open = openSuccess.findViewById(R.id.back_open);
-                        back_open.setOnClickListener(MainActivity.this);
+
                         mBleController.WriteBuffer("RL222", new OnWriteCallback() {
                             @Override
                             public void onSuccess() {
                                 Log.d("onConnSuccess>>>", "ok");
+                                openSuccess = LayoutInflater.from(MainActivity.this).inflate(R.layout.open_door_success, null);
+                                fl_replace.addView(openSuccess);
+                                back_open = openSuccess.findViewById(R.id.back_open);
+                                back_open.setOnClickListener(MainActivity.this);
+                                Handler handler = new Handler();
+                                handler.postDelayed(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        /**
+                                         *要执行的操作
+                                         */
+                                        openSuccess.setVisibility(View.GONE);
+                                        mainFragment.setVisibility(View.VISIBLE);
+                                    }
+                                }, 2000);//3秒后执行Runnable中的run方法
                             }
 
                             @Override
                             public void onFailed(int state) {
                                 Log.d("onConnSuccess>>>", "fail");
+                                Toast.makeText(MainActivity.this, "蓝牙门禁已断开，请重启app再试", Toast.LENGTH_LONG).show();
+                                return;
                             }
                         });
-                        Handler handler = new Handler();
-                        handler.postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                /**
-                                 *要执行的操作
-                                 */
-                                openSuccess.setVisibility(View.GONE);
-                                mainFragment.setVisibility(View.VISIBLE);
-                            }
-                        }, 2000);//3秒后执行Runnable中的run方法
+
                     } else {
                         Toast.makeText(MainActivity.this, response.getString("message"), Toast.LENGTH_LONG).show();
                         return;
@@ -1104,35 +1117,39 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             Log.d("open==>>>", "" + open);
             if (open == 1) {
                 //识别成功
-                mainFragment.setVisibility(View.GONE);
-                openSuccess = LayoutInflater.from(MainActivity.this).inflate(R.layout.open_door_success, null);
-                fl_replace.addView(openSuccess);
-//                m_rkctrl.exec_io_cmd(6, 0);
-//                Log.d("", "关闭继电器控制电磁所");
-                back_open = openSuccess.findViewById(R.id.back_open);
-                back_open.setOnClickListener(this);
+
                 mBleController.WriteBuffer("RL222", new OnWriteCallback() {
                     @Override
                     public void onSuccess() {
                         Log.d("onConnSuccess>>>", "ok");
+                        mainFragment.setVisibility(View.GONE);
+                        openSuccess = LayoutInflater.from(MainActivity.this).inflate(R.layout.open_door_success, null);
+                        fl_replace.addView(openSuccess);
+//                m_rkctrl.exec_io_cmd(6, 0);
+//                Log.d("", "关闭继电器控制电磁所");
+                        back_open = openSuccess.findViewById(R.id.back_open);
+                        back_open.setOnClickListener(MainActivity.this);
+                        Handler handler = new Handler();
+                        handler.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                /**
+                                 *要执行的操作
+                                 */
+                                openSuccess.setVisibility(View.GONE);
+                                mainFragment.setVisibility(View.VISIBLE);
+                            }
+                        }, 2000);//3秒后执行Runnable中的run方法
                     }
 
                     @Override
                     public void onFailed(int state) {
                         Log.d("onConnSuccess>>>", "fail");
+                        Toast.makeText(MainActivity.this, "蓝牙门禁已断开，请重启app再试", Toast.LENGTH_LONG).show();
+                        return;
                     }
                 });
-                Handler handler = new Handler();
-                handler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        /**
-                         *要执行的操作
-                         */
-                        openSuccess.setVisibility(View.GONE);
-                        mainFragment.setVisibility(View.VISIBLE);
-                    }
-                }, 2000);//3秒后执行Runnable中的run方法
+
             } else {
                 Toast.makeText(MainActivity.this, "未识别，请重新识别或选择其他开门方式", Toast.LENGTH_LONG).show();
                 Handler handler2 = new Handler();
@@ -1303,32 +1320,36 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         userId = data.getInt("id");
                         Log.d("uID", "" + userId);
                         doSendLog(userId);
-                        openSuccess = LayoutInflater.from(MainActivity.this).inflate(R.layout.open_door_success, null);
-                        fl_replace.addView(openSuccess);
-                        back_open = openSuccess.findViewById(R.id.back_open);
-                        back_open.setOnClickListener(MainActivity.this);
+
                         mBleController.WriteBuffer("RL222", new OnWriteCallback() {
                             @Override
                             public void onSuccess() {
                                 Log.d("onConnSuccess>>>", "ok");
+                                openSuccess = LayoutInflater.from(MainActivity.this).inflate(R.layout.open_door_success, null);
+                                fl_replace.addView(openSuccess);
+                                back_open = openSuccess.findViewById(R.id.back_open);
+                                back_open.setOnClickListener(MainActivity.this);
+                                Handler handler = new Handler();
+                                handler.postDelayed(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        /**
+                                         *要执行的操作
+                                         */
+                                        openSuccess.setVisibility(View.GONE);
+                                        mainFragment.setVisibility(View.VISIBLE);
+                                    }
+                                }, 2000);//3秒后执行Runnable中的run方法
                             }
 
                             @Override
                             public void onFailed(int state) {
                                 Log.d("onConnSuccess>>>", "fail");
+                                Toast.makeText(MainActivity.this, "蓝牙门禁已断开，请重启app再试", Toast.LENGTH_LONG).show();
+                                return;
                             }
                         });
-                        Handler handler = new Handler();
-                        handler.postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                /**
-                                 *要执行的操作
-                                 */
-                                openSuccess.setVisibility(View.GONE);
-                                mainFragment.setVisibility(View.VISIBLE);
-                            }
-                        }, 2000);//3秒后执行Runnable中的run方法
+
                     } else {
                         Toast.makeText(MainActivity.this, response.getString("message"), Toast.LENGTH_LONG).show();
                         return;

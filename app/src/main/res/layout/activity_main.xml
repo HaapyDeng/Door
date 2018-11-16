@@ -48,7 +48,7 @@
         android:marqueeRepeatLimit="marquee_forever"
         android:paddingLeft="20dp"
         android:singleLine="true"
-        android:text="2018年11月12日下午9点到第二天早上6点停水维修，请各位业主们准备好备用水源"
+        android:text="通知：通知"
         android:textColor="#333333"
         android:textSize="20dp" />
 
