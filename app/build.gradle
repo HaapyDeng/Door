@@ -5,11 +5,15 @@ android {
     defaultConfig {
         applicationId "com.max_plus.homedooropenplate"
         minSdkVersion 16
-        targetSdkVersion 27
+        targetSdkVersion 23
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        ndk{
+            abiFilters "armeabi"
+        }
     }
+
     buildTypes {
         release {
             minifyEnabled false

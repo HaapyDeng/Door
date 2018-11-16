@@ -25,12 +25,12 @@ import java.util.List;
 public class FaceDB {
     private final String TAG = this.getClass().toString();
 
-    public static String appid = "7Q9NG1WNBwTa6f7J5eUoaUHvi8NPYEfu33A8upEDjcvX";
-    public static String ft_key = "FmsQBUYRhoUteovgAZagukuoB9rCt6ewcWKh6n7GfSGQ";
-    public static String fd_key = "FmsQBUYRhoUteovgAZagukuvLZ7LndcNTMQ5ehFrb2eN";
-    public static String fr_key = "FmsQBUYRhoUteovgAZagukvHpktrVGDeEaZyf8bgJcrF";
-    public static String age_key = "FmsQBUYRhoUteovgAZagukvfJxgNcBgNCZabTsXLZeof";
-    public static String gender_key = "FmsQBUYRhoUteovgAZagukvnUMwYEeeWvKX2n3t87YbR";
+    public static String age_key = "ECSGoH9wTBVcmuoDDFqEuaCfFxx6HZ3ZSqwvmZoDoYwT";
+    public static String gender_key = "ECSGoH9wTBVcmuoDDFqEuaCnRNDFTfxvsywyMfKqveSj";
+    public static String appid = "7Q9NG1WNBwTa6f7J5eUoaUHoYj7Euoc3JW5vH17gQSgD";
+    public static String ft_key = "ECSGoH9wTBVcmuoDDFqEuaBo8A7sEizmUKKqzKFr9Uwh";
+    public static String fd_key = "ECSGoH9wTBVcmuoDDFqEuaBvHZP7ScXEAdDJ1i2RGUXA";
+    public static String fr_key = "ECSGoH9wTBVcmuoDDFqEuaCQwARkCNt9RAmu5eNwieSb";
 
     String mDBPath;
     public List<FaceRegist> mRegister;

@@ -180,7 +180,7 @@ public class DetecterActivity extends Activity implements OnCameraListener, View
 //                            mImageView.setImageAlpha(255);
 //                            mImageView.setImageBitmap(bmp);
                             try {
-                                sleep(2000);
+                                sleep(0);
                             } catch (InterruptedException e) {
                                 e.printStackTrace();
                             }
