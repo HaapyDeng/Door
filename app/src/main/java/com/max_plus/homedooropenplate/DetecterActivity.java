@@ -179,11 +179,11 @@ public class DetecterActivity extends Activity implements OnCameraListener, View
                             }
 //                            mImageView.setImageAlpha(255);
 //                            mImageView.setImageBitmap(bmp);
-                            try {
-                                sleep(0);
-                            } catch (InterruptedException e) {
-                                e.printStackTrace();
-                            }
+//                            try {
+//                                sleep(0);
+//                            } catch (InterruptedException e) {
+//                                e.printStackTrace();
+//                            }
                             Intent intentTemp = new Intent();
                             intentTemp.putExtra("open", 1);
                             setResult(3, intentTemp);
@@ -209,11 +209,11 @@ public class DetecterActivity extends Activity implements OnCameraListener, View
                                 mImageView.setScaleY(-1);
                             }
 //                            mImageView.setImageBitmap(bmp);
-                            try {
-                                sleep(2000);
-                            } catch (InterruptedException e) {
-                                e.printStackTrace();
-                            }
+//                            try {
+//                                sleep(2000);
+//                            } catch (InterruptedException e) {
+//                                e.printStackTrace();
+//                            }
                             Intent intentTemp2 = new Intent();
                             intentTemp2.putExtra("open", 0);
                             setResult(3, intentTemp2);
