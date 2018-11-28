@@ -14,6 +14,7 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
@@ -42,6 +43,7 @@ import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -490,8 +492,71 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                 break;
             case R.id.tv_setting:
-                Intent intent = new Intent(this, SettingActivity.class);
-                startActivity(intent);
+                final PopupWindow mPopupWindow;
+                //创建一个popUpWindow
+                final View popLayout = LayoutInflater.from(this).inflate(R.layout.confirm_password, null);
+
+                mPopupWindow = new PopupWindow(popLayout, LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+                mPopupWindow.setClippingEnabled(false);
+                //产生背景变暗效果
+                WindowManager.LayoutParams lp = getWindow().getAttributes();
+                lp.alpha = 0.4f;
+                getWindow().setAttributes(lp);
+                //点击外面popupWindow消失
+                mPopupWindow.setOutsideTouchable(false);
+                //popupWindow获取焦点
+                mPopupWindow.setFocusable(true);
+                //popupWindow设置背景
+                //popupWindow设置开场动画风格
+                //popupWindow.setAnimationStyle(R.style.popupWindow_anim);
+                //刷新popupWindow
+                //popupWindow.update();
+
+                //设置popupWindow消失时的监听
+                mPopupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
+                    //在dismiss中恢复透明度
+                    public void onDismiss() {
+                        WindowManager.LayoutParams lp = getWindow().getAttributes();
+                        lp.alpha = 1f;
+                        getWindow().setAttributes(lp);
+                    }
+                });
+                mPopupWindow.showAtLocation(this.findViewById(R.id.main), Gravity.CENTER, 0, 0);
+
+                popLayout.findViewById(R.id.ok).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        String password = "";
+                        EditText et_password = popLayout.findViewById(R.id.et_password);
+                        password = et_password.getText().toString().trim();
+                        SharedPreferences sp = getSharedPreferences("password", Context.MODE_PRIVATE);
+                        String psd = sp.getString("psd", null);
+                        if (psd == null) {
+                            SharedPreferences sp3 = getSharedPreferences("password", Context.MODE_PRIVATE);
+                            sp3.edit().putString("psd", "888888").commit();
+                            psd = "888888";
+                        }
+                        if (password.length() == 0) {
+                            Toast.makeText(MainActivity.this, "密码不能为空，请输入密码", Toast.LENGTH_LONG).show();
+                            return;
+                        }
+                        if (psd.equals(password)) {
+                            mPopupWindow.dismiss();
+                            Intent intent = new Intent(MainActivity.this, SettingActivity.class);
+                            startActivity(intent);
+                        } else {
+                            Toast.makeText(MainActivity.this, "输入密码错误请重试", Toast.LENGTH_LONG).show();
+                            return;
+                        }
+                    }
+                });
+                popLayout.findViewById(R.id.cancel).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        mPopupWindow.dismiss();
+                    }
+                });
+
                 break;
             case R.id.back_open://开门成功返回按钮
 
