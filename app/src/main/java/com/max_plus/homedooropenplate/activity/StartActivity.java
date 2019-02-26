@@ -87,36 +87,39 @@ public class StartActivity extends AppCompatActivity {
     }
 
     public void startActiviy() {
-        if (mRequestPermission.isEmpty()) {
-            final ProgressDialog mProgressDialog = new ProgressDialog(this);
-            mProgressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-            mProgressDialog.setTitle("loading register data...");
-            mProgressDialog.setCancelable(false);
-            mProgressDialog.show();
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    Application app = (Application) StartActivity.this.getApplicationContext();
-                    app.mFaceDB.loadFaces();
-                    StartActivity.this.runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            mProgressDialog.cancel();
-                            Intent intent = new Intent(StartActivity.this, MainActivity.class);
-                            startActivityForResult(intent, PERMISSION_REQ);
-                            finish();
-                        }
-                    });
-                }
-            }).start();
-        } else {
-            Toast.makeText(this, "PERMISSION DENIED!", Toast.LENGTH_LONG).show();
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    StartActivity.this.finish();
-                }
-            }, 3000);
-        }
+        Intent intent = new Intent(StartActivity.this, MainActivity.class);
+        startActivityForResult(intent, PERMISSION_REQ);
+        finish();
+//        if (mRequestPermission.isEmpty()) {
+//            final ProgressDialog mProgressDialog = new ProgressDialog(this);
+//            mProgressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+//            mProgressDialog.setTitle("loading register data...");
+//            mProgressDialog.setCancelable(false);
+//            mProgressDialog.show();
+//            new Thread(new Runnable() {
+//                @Override
+//                public void run() {
+//                    Application app = (Application) StartActivity.this.getApplicationContext();
+//                    app.mFaceDB.loadFaces();
+//                    StartActivity.this.runOnUiThread(new Runnable() {
+//                        @Override
+//                        public void run() {
+//                            mProgressDialog.cancel();
+//                            Intent intent = new Intent(StartActivity.this, MainActivity.class);
+//                            startActivityForResult(intent, PERMISSION_REQ);
+//                            finish();
+//                        }
+//                    });
+//                }
+//            }).start();
+//        } else {
+//            Toast.makeText(this, "PERMISSION DENIED!", Toast.LENGTH_LONG).show();
+//            new Handler().postDelayed(new Runnable() {
+//                @Override
+//                public void run() {
+//                    StartActivity.this.finish();
+//                }
+//            }, 3000);
+//        }
     }
 }
